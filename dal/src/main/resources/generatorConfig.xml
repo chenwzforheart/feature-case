@@ -6,6 +6,9 @@
     <context id="dal">
         <!-- Model加入数据库注释 -->
         <plugin type="com.cwzsmile.tool.ColumnRemarkPlugin"/>
+        <plugin type="com.cwzsmile.tool.BaseMapperPlugin">
+            <property name="mappers" value="com.cwzsmile.base.BaseMapper" />
+        </plugin>
 
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -26,7 +29,14 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.cwzsmile.mapper"
                              targetProject="dal/src/main/java"></javaClientGenerator>
 
+        <!-- 1.全代码生成 -->
+        <!--<table tableName="cms_help" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"></table>-->
+
+        <!-- 2.继承tk.mybatis生成，配合插件com.cwzsmile.tool.BaseMapperPlugin -->
         <table tableName="cms_help" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"></table>
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+            ></table>
     </context>
 </generatorConfiguration>

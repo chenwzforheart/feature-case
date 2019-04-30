@@ -1,14 +1,21 @@
 package com.cwzsmile.model;
 
 import java.util.Date;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 帮助表
  */
+@Table(name = "cms_help")
 public class CmsHelp {
     /**
      * ID
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
