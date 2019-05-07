@@ -7,7 +7,18 @@
         <!-- Model加入数据库注释 -->
         <plugin type="com.cwzsmile.tool.ColumnRemarkPlugin"/>
         <plugin type="com.cwzsmile.tool.BaseMapperPlugin">
-            <property name="mappers" value="com.cwzsmile.base.BaseMapper" />
+            <property name="mappers" value="com.cwzsmile.base.BaseMapper"/>
+        </plugin>
+
+        <plugin type="com.cwzsmile.tool.DomainClassPlugin">
+            <property name="targetProject" value="dal/src/main/java"/>
+            <property name="targetPackage" value="com.cwzsmile.service.domain"/>
+            <property name="suffix" value="DTO"/>
+        </plugin>
+
+        <plugin type="com.cwzsmile.tool.ServiceClassPlugin">
+            <property name="targetProject" value="dal/src/main/java"/>
+            <property name="targetPackage" value="com.cwzsmile.service"/>
         </plugin>
 
         <commentGenerator>
@@ -34,9 +45,11 @@
                enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
         <!-- 2.继承tk.mybatis生成，配合插件com.cwzsmile.tool.BaseMapperPlugin -->
-        <table tableName="cms_help" enableCountByExample="false" enableDeleteByExample="false"
+        <table tableName="cms_help" domainObjectName="CmsHelp"
+               enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"
                enableInsert="false" enableUpdateByPrimaryKey="false"
-            ></table>
+               enableDeleteByPrimaryKey="false"
+        ></table>
     </context>
 </generatorConfiguration>
