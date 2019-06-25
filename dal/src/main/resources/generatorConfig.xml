@@ -9,6 +9,7 @@
         <plugin type="com.cwzsmile.tool.BaseMapperPlugin">
             <property name="mappers" value="com.cwzsmile.base.BaseMapper"/>
         </plugin>
+        <plugin type="com.cwzsmile.tool.BatchInsertPlugin"/>
 
         <plugin type="com.cwzsmile.tool.DomainClassPlugin">
             <property name="targetProject" value="dal/src/main/java"/>

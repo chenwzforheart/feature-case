@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>dal</module>
         <module>scala-demo</module>
     </modules>
 
