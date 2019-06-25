@@ -1,11 +1,12 @@
 package com.cwzsmile.tool;
 
+import org.mybatis.generator.api.ConnectionFactory;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
-import org.mybatis.generator.internal.db.ConnectionFactory;
+import org.mybatis.generator.internal.JDBCConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -17,6 +18,8 @@ import java.util.List;
 public class ColumnRemarkPlugin extends PluginAdapter {
 
     private static String currentTable = "";
+
+    private static ConnectionFactory connectionFactory;
 
     @Override
     public boolean validate(List<String> warnings) {
@@ -50,8 +53,10 @@ public class ColumnRemarkPlugin extends PluginAdapter {
     }
 
     private String getTableRemark(IntrospectedTable introspectedTable) throws SQLException {
-        Connection connection = ConnectionFactory.getInstance().getConnection(
-                introspectedTable.getContext().getJdbcConnectionConfiguration());
+        if (connectionFactory == null) {
+            connectionFactory = new JDBCConnectionFactory(introspectedTable.getContext().getJdbcConnectionConfiguration());
+        }
+        Connection connection = connectionFactory.getConnection();
         DatabaseMetaData metaData = connection.getMetaData();
         String tableName = introspectedTable.getFullyQualifiedTable().toString();
         ResultSet resultSet = metaData.getTables(null, null, tableName, new String[]{"TABLE"});
