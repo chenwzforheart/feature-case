@@ -23,7 +23,7 @@ public class OverIsMergeablePlugin extends PluginAdapter {
         try {
             Field field = sqlMap.getClass().getDeclaredField("isMergeable");
             field.setAccessible(true);
-            field.setBoolean(sqlMap, false);
+            field.setBoolean(sqlMap, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
