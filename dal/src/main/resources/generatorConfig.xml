@@ -11,6 +11,9 @@
         </plugin>
         <plugin type="com.cwzsmile.tool.BatchInsertPlugin"/>
 
+        <!-- 会覆盖调xml中自己定义的方法 -->
+        <plugin type="com.cwzsmile.tool.OverIsMergeablePlugin"/>
+
         <plugin type="com.cwzsmile.tool.DomainClassPlugin">
             <property name="targetProject" value="dal/src/main/java"/>
             <property name="targetPackage" value="com.cwzsmile.service.domain"/>
