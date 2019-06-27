@@ -1,6 +1,10 @@
 package com.cwzsmile.tool;
 
+import lombok.extern.slf4j.Slf4j;
+import org.dom4j.DocumentException;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
@@ -31,6 +35,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
  * Created by csh9016 on 2019/6/26.
  * 覆盖同id的元素，其他新写的元素不影响
  */
+@Slf4j
 public class XmlMergeUtil {
 
     public static String fileRead(File file) throws Exception {
@@ -83,35 +88,66 @@ public class XmlMergeUtil {
         //新加元素
         org.dom4j.Document ret = (org.dom4j.Document) a.clone();
         List<org.dom4j.Element> retEle = ret.getRootElement().elements();
-        retEle.forEach(s->{
+        retEle.forEach(s -> {
             s.getParent().remove(s);
         });
         List<org.dom4j.Element> newAdd = new ArrayList<>();
         for (int i = 0; i < aa.size(); i++) {
             org.dom4j.Element tempA = aa.get(i);
-            boolean mz = false;
+            boolean upd = false;
             org.dom4j.Element tempB = null;
             for (int j = 0; j < bb.size(); j++) {
-                tempB = bb.get(i);
+                tempB = bb.get(j);
                 if (tempB.attribute("id").getValue().equals(tempA.attribute("id").getValue())) {
-                    mz = true;
+                    upd = true;
                     break;
-                } else {
-                    newAdd.add(tempB);
+                }
+                if (j == bb.size() - 1) {
+                    newAdd.add(tempA);
                 }
             }
-            if (mz) {
-                ret.getRootElement().add(tempB);
-            }else {
-                ret.getRootElement().add(tempA);
+            if (upd) {
+                ret.getRootElement().content().add(tempA);
             }
         }
-        newAdd.forEach(s->{
+
+        //新增元素放末尾
+        newAdd.forEach(s -> {
             ret.add(s);
         });
 
-        return "";
+
+        return pp(ret);
     }
+
+    public static String pp(org.dom4j.Document doc) {
+        OutputFormat formater = OutputFormat.createPrettyPrint();
+        formater.setEncoding("UTF-8");
+        formater.setTrimText(false);
+        formater.setIndent(true); //设置是否缩进
+        formater.setIndent("  "); //以四个空格方式实现缩进
+        formater.setNewlines(true);
+        StringWriter out = new StringWriter();
+        XMLWriter writer = new XMLWriter(out, formater);
+        try {
+            writer.write(doc);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return out.toString();
+    }
+
+    public static org.w3c.dom.Document toW3CDocument(org.dom4j.Document d4doc) {
+        org.dom4j.io.DOMWriter d4Writer = new org.dom4j.io.DOMWriter();
+        try {
+            return d4Writer.write(d4doc);
+        } catch (DocumentException e) {
+            log.warn("can't cast dom4jDocument to W3CDocument", e);
+            return null;
+        }
+    }
+
 
     private static String prettyPrint(Document document) throws ShellException {
         DomWriter dw = new DomWriter();

@@ -55,11 +55,11 @@
                enableInsert="false" enableUpdateByPrimaryKey="false"
                enableDeleteByPrimaryKey="false"
         ></table>
-        <table tableName="cms_help_category" domainObjectName="CmsHelpCategory"
+        <!--<table tableName="cms_help_category" domainObjectName="CmsHelpCategory"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"
                enableInsert="false" enableUpdateByPrimaryKey="false"
                enableDeleteByPrimaryKey="false"
-        ></table>
+        ></table>-->
     </context>
 </generatorConfiguration>
