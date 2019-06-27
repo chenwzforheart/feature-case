@@ -91,6 +91,8 @@ public class XmlMergeUtil {
         retEle.forEach(s -> {
             s.getParent().remove(s);
         });
+
+        List<Integer> old = new ArrayList<>();
         List<org.dom4j.Element> newAdd = new ArrayList<>();
         for (int i = 0; i < aa.size(); i++) {
             org.dom4j.Element tempA = aa.get(i);
@@ -100,12 +102,14 @@ public class XmlMergeUtil {
                 tempB = bb.get(j);
                 if (tempB.attribute("id").getValue().equals(tempA.attribute("id").getValue())) {
                     upd = true;
+                    old.add(j);
                     break;
                 }
                 if (j == bb.size() - 1) {
                     newAdd.add(tempA);
                 }
             }
+            //更新元素
             if (upd) {
                 ret.getRootElement().content().add(tempA);
             }
@@ -113,11 +117,16 @@ public class XmlMergeUtil {
 
         //新增元素放末尾
         newAdd.forEach(s -> {
-            ret.add(s);
+            ret.getRootElement().content().add(s);
         });
-
-
-        return pp(ret);
+        //保留老元素
+        for (int i = 0; i < bb.size(); i++) {
+            if (old.contains(i)) {
+                continue;
+            }
+            ret.getRootElement().content().add(bb.get(i));
+        }
+        return pp(ret).replaceAll("\\n\\s*\\n", "\n");
     }
 
     public static String pp(org.dom4j.Document doc) {
