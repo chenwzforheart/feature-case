@@ -39,9 +39,9 @@
             <property name="useInformationSchema" value="true"/>
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.cwzsmile.model" targetProject="dal/src/main/java"></javaModelGenerator>
-        <sqlMapGenerator targetPackage="com.cwzsmile.mapper" targetProject="dal/src/main/resources"></sqlMapGenerator>
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.cwzsmile.mapper"
+        <javaModelGenerator targetPackage="com.cwzsmile.dal.model" targetProject="dal/src/main/java"></javaModelGenerator>
+        <sqlMapGenerator targetPackage="com.cwzsmile.dal.mapper" targetProject="dal/src/main/resources"></sqlMapGenerator>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.cwzsmile.dal.mapper"
                              targetProject="dal/src/main/java"></javaClientGenerator>
 
         <!-- 1.全代码生成 -->
