@@ -1,4 +1,4 @@
-package com.cwzsmile.base.page;
+package com.cwzsmile.base;
 
 import lombok.Data;
 

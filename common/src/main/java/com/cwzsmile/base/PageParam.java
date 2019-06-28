@@ -1,8 +1,6 @@
-package com.cwzsmile.base.page;
+package com.cwzsmile.base;
 
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import lombok.Data;
-import org.apache.ibatis.session.RowBounds;
 
 /**
  * Created by csh9016 on 2019/6/28.
@@ -22,14 +20,6 @@ public class PageParam {
     public PageParam(Integer size, Integer page) {
         this.size = size;
         this.page = page;
-    }
-
-    public PageBounds toPageBounds() {
-        return new PageBounds(page, size);
-    }
-
-    public RowBounds toRowBounds() {
-        return new RowBounds((page - 1) * size, size);
     }
 
     public static PageParam newInstance(Integer size, Integer page) {
