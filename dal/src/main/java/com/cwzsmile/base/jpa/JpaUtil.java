@@ -1,4 +1,4 @@
-package com.cwzsmile.jpa;
+package com.cwzsmile.base.jpa;
 
 import com.cwzsmile.base.PageParam;
 import com.cwzsmile.base.PageResult;

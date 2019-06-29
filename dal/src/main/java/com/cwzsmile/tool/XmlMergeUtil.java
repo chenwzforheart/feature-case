@@ -73,8 +73,8 @@ public class XmlMergeUtil {
         SAXReader saxReader = new SAXReader();
         org.dom4j.Document a = saxReader.read(new StringReader(newFile));
         org.dom4j.Document b = saxReader.read(new StringReader(existingFile));
-        List<org.dom4j.Element> aa = a.selectNodes("/mapper/*[@id]");
-        List<org.dom4j.Element> bb = b.selectNodes("/mapper/*[@id]");
+        List<org.dom4j.Element> aa = (List)a.selectNodes("/mapper/*[@id]");
+        List<org.dom4j.Element> bb = (List)b.selectNodes("/mapper/*[@id]");
 
         //新加元素
         org.dom4j.Document ret = (org.dom4j.Document) a.clone();

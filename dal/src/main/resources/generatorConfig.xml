@@ -7,12 +7,24 @@
         <!-- Model加入数据库注释 -->
         <plugin type="com.cwzsmile.tool.ColumnRemarkPlugin"/>
         <plugin type="com.cwzsmile.tool.BaseMapperPlugin">
-            <property name="mappers" value="com.cwzsmile.base.BaseMapper"/>
+            <property name="mappers" value="com.cwzsmile.base.mybatis.BaseMapper"/>
         </plugin>
         <plugin type="com.cwzsmile.tool.BatchInsertPlugin"/>
 
         <!-- 会覆盖调xml中自己定义的方法 -->
         <plugin type="com.cwzsmile.tool.OverIsMergeablePlugin"/>
+
+        <plugin type="com.cwzsmile.tool.JpaEntityPlugin">
+            <property name="targetProject" value="dal/src/main/java"/>
+            <property name="targetPackage" value="com.cwzsmile.dal.entity"/>
+            <property name="suffix" value=""/>
+        </plugin>
+
+        <plugin type="com.cwzsmile.tool.JpaDataPlugin">
+            <property name="targetProject" value="dal/src/main/java"/>
+            <property name="targetPackage" value="com.cwzsmile.dal.repository"/>
+            <property name="suffix" value=""/>
+        </plugin>
 
         <plugin type="com.cwzsmile.tool.DomainClassPlugin">
             <property name="targetProject" value="dal/src/main/java"/>
@@ -31,9 +43,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/mall?characterEncoding=UTF-8&amp;useSSL=false"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/favorites?characterEncoding=UTF-8&amp;useSSL=false"
                         userId="root"
-                        password="">
+                        password="root">
             <!-- 配置获得表注释和字段注释 -->
             <property name="remarks" value="true"/>
             <property name="useInformationSchema" value="true"/>
@@ -49,17 +61,96 @@
                enableSelectByExample="false" enableUpdateByExample="false"></table>-->
 
         <!-- 2.继承tk.mybatis生成，配合插件com.cwzsmile.tool.BaseMapperPlugin -->
-        <table tableName="cms_help" domainObjectName="CmsHelp"
+        <table tableName="collect" domainObjectName="Collect"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"
                enableInsert="false" enableUpdateByPrimaryKey="false"
                enableDeleteByPrimaryKey="false"
         ></table>
-        <!--<table tableName="cms_help_category" domainObjectName="CmsHelpCategory"
+        <table tableName="collector_view" domainObjectName="CollectorView"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"
                enableInsert="false" enableUpdateByPrimaryKey="false"
                enableDeleteByPrimaryKey="false"
-        ></table>-->
+        ></table>
+        <table tableName="comment" domainObjectName="Comment"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="config" domainObjectName="Config"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="favorites" domainObjectName="Favorites"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="feedback" domainObjectName="Feedback"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="follow" domainObjectName="Follow"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="letter" domainObjectName="Letter"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="look_record" domainObjectName="LookRecord"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="notice" domainObjectName="Notice"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="praise" domainObjectName="Praise"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="spider_get" domainObjectName="SpiderGet"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="url_library" domainObjectName="UrlLibrary"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="user" domainObjectName="User"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+        <table tableName="user_is_follow" domainObjectName="UserIsFollow"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"
+               enableInsert="false" enableUpdateByPrimaryKey="false"
+               enableDeleteByPrimaryKey="false"
+        ></table>
+
     </context>
 </generatorConfiguration>

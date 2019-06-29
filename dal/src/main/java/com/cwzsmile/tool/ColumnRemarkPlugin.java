@@ -52,7 +52,7 @@ public class ColumnRemarkPlugin extends PluginAdapter {
         return super.modelFieldGenerated(field, topLevelClass, introspectedColumn, introspectedTable, modelClassType);
     }
 
-    private String getTableRemark(IntrospectedTable introspectedTable) throws SQLException {
+    public static String getTableRemark(IntrospectedTable introspectedTable) throws SQLException {
         if (connectionFactory == null) {
             connectionFactory = new JDBCConnectionFactory(introspectedTable.getContext().getJdbcConnectionConfiguration());
         }

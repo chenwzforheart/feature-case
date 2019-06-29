@@ -1,5 +1,6 @@
-package com.cwzsmile.base;
+package com.cwzsmile.base.mybatis;
 
+import com.cwzsmile.base.PageParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.ibatis.session.RowBounds;
 
