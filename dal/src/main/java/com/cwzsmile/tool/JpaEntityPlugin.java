@@ -31,12 +31,15 @@ public class JpaEntityPlugin extends PluginAdapter {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         topLevelClass.addImportedType("java.io.Serializable");
         topLevelClass.addImportedType("javax.persistence.Entity");
+        topLevelClass.addImportedType("javax.persistence.Table");
         topLevelClass.addImportedType("lombok.Getter");
         topLevelClass.addImportedType("lombok.Setter");
         topLevelClass.addSuperInterface(new FullyQualifiedJavaType("Serializable"));
         topLevelClass.addAnnotation("@Getter");
         topLevelClass.addAnnotation("@Setter");
         topLevelClass.addAnnotation("@Entity");
+        String tableName = introspectedTable.getFullyQualifiedTable().toString();
+        topLevelClass.addAnnotation("@Table(name = \"" + tableName + "\")");
         Field serial = new Field();
         serial.setVisibility(JavaVisibility.PRIVATE);
         serial.setStatic(true);
