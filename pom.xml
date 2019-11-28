@@ -9,7 +9,6 @@
 
     <modules>
         <module>dal</module>
-        <module>service</module>
         <module>common</module>
         <module>scala-demo</module>
     </modules>
