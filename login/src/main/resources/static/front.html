@@ -13,6 +13,7 @@
         </form>
         <script type="application/javascript">
             function clickBtn() {
+                axios.defaults.withCredentials=true;
                 var instance = axios.create({
                     baseURL:"http://localhost/",
                     timeout:1000,
@@ -21,7 +22,12 @@
                 var param = new Object();
                 param.username = document.getElementById("username").value;
                 param.password = document.getElementById("password").value;
-                instance.post('/login', param);
+                instance.post('/login', param)
+                    .then(function (response) {
+                    //console.log(response.data);
+                    console.log(response.status);
+                    console.log(response.headers);
+                });
             }
         </script>
     </body>
