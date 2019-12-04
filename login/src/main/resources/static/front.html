@@ -4,6 +4,7 @@
         <title>跨域测试</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
         <script src="axios.min.js"></script>
+        <script src="js.cookie.min.js"></script>
     </head>
     <body>
         <form action="http://localhost/login" method="post">
@@ -13,6 +14,7 @@
         </form>
         <script type="application/javascript">
             function clickBtn() {
+
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
                     baseURL:"http://localhost/",
