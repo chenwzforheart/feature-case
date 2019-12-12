@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>跨域测试</title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <script src="axios.min.js"></script>
+        <script src="js.cookie.min.js"></script>
+    </head>
+    <body>
+        <form action="http://localhost/login" method="post">
+            <label>用户名：</label><input type="text" name="username" id="username">
+            <label>密码：</label><input type="password" name="password" id="password">
+            <input type="button" value="登录" onclick="clickBtn()">
+        </form>
+        <script type="application/javascript">
+            function clickBtn() {
+
+                axios.defaults.withCredentials=true;
+                var instance = axios.create({
+                    baseURL:"http://localhost:8080/",
+                    timeout:1000,
+                    header:{'X-Custom-Header':'foobar'}
+                });
+                var param = new Object();
+                param.username = document.getElementById("username").value;
+                param.password = document.getElementById("password").value;
+                instance.post('/login1', param)
+                    .then(function (response) {
+                    //console.log(response.data);
+                    console.log(response.status);
+                    console.log(response.headers);
+                });
+            }
+        </script>
+    </body>
+</html>
