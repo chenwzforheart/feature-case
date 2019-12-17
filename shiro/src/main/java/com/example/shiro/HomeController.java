@@ -2,6 +2,7 @@ package com.example.shiro;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,8 @@ public class HomeController {
         log.info("username:{},password:{},sessionId:{},ip:{}",loginInfo.getUsername(),loginInfo.getPassword(),httpSession.getId(),remoteAddr);
     }
 
-    @RequiresRoles("ROLE_ADMIN")
+    //@RequiresRoles("ROLE_ADMIN")
+    @RequiresPermissions("/admin.jsp")
     @RequestMapping(value = "/login1",method = RequestMethod.POST)
     public String login1(@RequestBody LoginInfo loginInfo, HttpServletRequest request, HttpSession httpSession) {
         String remoteAddr = request.getRemoteAddr();
