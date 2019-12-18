@@ -24,27 +24,16 @@ public class RestFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-
-            //未登录
+        //登录URL
+        if (isLoginRequest(request, response)) {
+            //登录POST
             if (isLoginSubmission(request, response)) {
-                //如果请求loginURL
-                if (isLoginRequest(request, response)) {
-                    if (log.isTraceEnabled()) {
-                        log.trace("Login submission detected.  Attempting to execute login.");
-                    }
-                    return executeLogin(request, response);
+                if (log.isTraceEnabled()) {
+                    log.trace("Login submission detected.  Attempting to execute login.");
                 }
-                //提示登录
-                else {
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType("application/json");
-                    response.getWriter().println(JSON.toJSONString(CommonResult.unauthorized("用户未登录")));
-                    response.getWriter().flush();
-                    return false;
-                }
-
+                return executeLogin(request, response);
             }
-            //已登录
+            //登录页信息
             else {
                 if (log.isTraceEnabled()) {
                     log.trace("Login page view.");
@@ -52,6 +41,24 @@ public class RestFormAuthenticationFilter extends FormAuthenticationFilter {
                 //allow them to see the login page ;)
                 return true;
             }
+        }
+        //非登录URL
+        else {
+            //验证码CODE路径，生成SESSION
+            //注册接口，验证CODE
+            //其他路径
+            if (pathsMatch("/code",request)) {
+                return true;
+            } else if (pathsMatch("register", request)) {
+                return true;
+            } else {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json");
+                response.getWriter().println(JSON.toJSONString(CommonResult.forbidden("")));
+                response.getWriter().flush();
+                return false;
+            }
+        }
     }
 
     @Override

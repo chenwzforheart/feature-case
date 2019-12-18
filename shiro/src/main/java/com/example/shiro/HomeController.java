@@ -61,4 +61,16 @@ public class HomeController {
         return "LOGOUT";
     }
 
+    @RequestMapping(value = "/code",method = {RequestMethod.POST,RequestMethod.GET})
+    public String code(HttpSession session) {
+        session.setAttribute("code","1234");
+        return "CODE:1234";
+    }
+
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public String register() {
+        Subject login = SecurityUtils.getSubject();
+        login.logout();
+        return "LOGOUT";
+    }
 }
