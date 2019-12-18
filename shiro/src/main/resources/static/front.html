@@ -50,8 +50,28 @@
                         console.log(response.headers);
                     });
             }
+
+            function clickBtn2() {
+
+                axios.defaults.withCredentials=true;
+                var instance = axios.create({
+                    baseURL:"http://localhost:8080/",
+                    timeout:1000,
+                    header:{'X-Custom-Header':'foobar'}
+                });
+                var param = new Object();
+                param.username = document.getElementById("username").value;
+                param.password = document.getElementById("password").value;
+                instance.post('/logout', param)
+                    .then(function (response) {
+                        console.log(response.data);
+                        console.log(response.status);
+                        console.log(response.headers);
+                    });
+            }
         </script>
 
         <input type="button" value="查数据" onclick="clickBtn1()">
+        <input type="button" value="登出" onclick="clickBtn2()">
     </body>
 </html>

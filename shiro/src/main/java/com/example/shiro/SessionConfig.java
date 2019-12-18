@@ -49,6 +49,7 @@ public class SessionConfig {
         jdbcRealm.setPermissionsQuery("select c.res_string as permission from t_role a left join t_resc_role b on b.role_id = a.id LEFT JOIN t_resc c on c.id = b.resc_id" +
                 " where a.name = ?");
         jdbcRealm.setDataSource(dataSources.getIfAvailable());
+        jdbcRealm.setPermissionsLookupEnabled(true);
         securityManager.setRealm(jdbcRealm);
         return securityManager;
     }

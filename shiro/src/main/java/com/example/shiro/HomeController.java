@@ -1,9 +1,11 @@
 package com.example.shiro;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +52,13 @@ public class HomeController {
     @RequestMapping(value = "/success")
     public String success() {
         return "SUCCESS";
+    }
+
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    public String logout() {
+        Subject login = SecurityUtils.getSubject();
+        login.logout();
+        return "LOGOUT";
     }
 
 }
