@@ -49,7 +49,7 @@ public class RestFormAuthenticationFilter extends FormAuthenticationFilter {
             //其他路径
             if (pathsMatch("/code",request)) {
                 return true;
-            } else if (pathsMatch("register", request)) {
+            } else if (pathsMatch("/register", request)) {
                 return true;
             } else {
                 response.setCharacterEncoding("UTF-8");

@@ -1,15 +1,22 @@
 package com.example.shiro;
 
+import com.example.shiro.cache.CacheJdbcRealm;
+import com.example.shiro.cache.PassService;
+import com.example.shiro.cache.RedisCacheM;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.PasswordMatcher;
+import org.apache.shiro.authc.credential.Sha256CredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.servlet.Filter;
 import javax.sql.DataSource;
@@ -21,6 +28,9 @@ import java.util.HashMap;
  */
 @Configuration
 public class SessionConfig {
+
+    @Autowired
+    private RedisTemplate<Object, Object> redisTemplate;
 
 
     //加入注解的使用，不加入这个注解不生效
@@ -38,11 +48,22 @@ public class SessionConfig {
         return defaultAAP;
     }
 
+    @Bean
+    public PasswordMatcher passwordMatcher(){
+        PasswordMatcher passwordMatcher = new PasswordMatcher();
+        //passwordMatcher.setPasswordService(passService());
+        return passwordMatcher;
+    }
+
+    @Bean
+    public PassService passService() {
+        return new PassService();
+    }
 
     @Bean
     public SecurityManager securityManager(ObjectProvider<DataSource> dataSources) {
         DefaultSecurityManager securityManager = new DefaultWebSecurityManager();
-        JdbcRealm jdbcRealm = new JdbcRealm();
+        CacheJdbcRealm jdbcRealm = new CacheJdbcRealm();
         jdbcRealm.setAuthenticationQuery("select password from t_user where username = ?");
         jdbcRealm.setUserRolesQuery("select c.name as role_name from t_user a left join t_user_role b on b.user_id = a.id left join t_role c on c.id = b.role_id" +
                 " where username = ?");
@@ -50,6 +71,9 @@ public class SessionConfig {
                 " where a.name = ?");
         jdbcRealm.setDataSource(dataSources.getIfAvailable());
         jdbcRealm.setPermissionsLookupEnabled(true);
+        jdbcRealm.setCacheManager(new RedisCacheM(redisTemplate));
+
+        jdbcRealm.setCredentialsMatcher(passwordMatcher());
         securityManager.setRealm(jdbcRealm);
         return securityManager;
     }

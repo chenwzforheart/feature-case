@@ -88,10 +88,36 @@
                         console.log(response.headers);
                     });
             }
+
+            function register() {
+
+                axios.defaults.withCredentials=true;
+                var instance = axios.create({
+                    baseURL:"http://localhost:8080/",
+                    timeout:1000,
+                    header:{'X-Custom-Header':'foobar'}
+                });
+                var param = new Object();
+                param.username = document.getElementById("username1").value;
+                param.password = document.getElementById("password1").value;
+                param.code = document.getElementById("code1").value;
+                instance.post('/register', param)
+                    .then(function (response) {
+                        console.log(response.data);
+                        console.log(response.status);
+                        console.log(response.headers);
+                    });
+            }
         </script>
 
         <input type="button" value="查数据" onclick="clickBtn1()">
         <input type="button" value="登出" onclick="clickBtn2()">
         <input type="button" value="验证码" onclick="clickBtn3()">
+        <form action="http://localhost/login" method="post">
+            <label>用户名：</label><input type="text" name="username" id="username1">
+            <label>验证码：</label><input type="text" name="code" id="code1">
+            <label>密码：</label><input type="password" name="password" id="password1">
+            <input type="button" value="注册" onclick="register()">
+        </form>
     </body>
 </html>
