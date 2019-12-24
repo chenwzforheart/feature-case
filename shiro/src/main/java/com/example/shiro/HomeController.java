@@ -43,12 +43,15 @@ public class HomeController {
     private PasswordMatcher passwordMatcher;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void login(@RequestBody LoginInfo loginInfo, HttpServletRequest request, HttpSession httpSession) {
-        String remoteAddr = request.getRemoteAddr();
+    public Object login(@RequestBody LoginInfo loginInfo, HttpServletRequest request, HttpSession httpSession) {
+        Object user = SecurityUtils.getSubject().getPrincipal();
+        log.info("用户名：{}",user);
+        return user;
+        /*String remoteAddr = request.getRemoteAddr();
         httpSession.setAttribute("loginFlag", true);
         httpSession.setAttribute("loginIP", remoteAddr);
         httpSession.setAttribute("loginUser", loginInfo.getUsername());
-        log.info("username:{},password:{},sessionId:{},ip:{}", loginInfo.getUsername(), loginInfo.getPassword(), httpSession.getId(), remoteAddr);
+        log.info("username:{},password:{},sessionId:{},ip:{}", loginInfo.getUsername(), loginInfo.getPassword(), httpSession.getId(), remoteAddr);*/
     }
 
     //@RequiresRoles("ROLE_ADMIN")
@@ -56,7 +59,13 @@ public class HomeController {
     @RequestMapping(value = "/login1", method = RequestMethod.POST)
     public String login1(@RequestBody LoginInfo loginInfo, HttpServletRequest request, HttpSession httpSession) {
         String remoteAddr = request.getRemoteAddr();
-        return String.format("username:%s,password:%s,sessionId:%s,ip:%s", loginInfo.getUsername(), loginInfo.getPassword(), httpSession.getId(), remoteAddr);
+        return String.format("11:username:%s,password:%s,sessionId:%s,ip:%s", loginInfo.getUsername(), loginInfo.getPassword(), httpSession.getId(), remoteAddr);
+    }
+
+    @RequestMapping(value = "/login2", method = RequestMethod.POST)
+    public String login2(@RequestBody LoginInfo loginInfo, HttpServletRequest request, HttpSession httpSession) {
+        String remoteAddr = request.getRemoteAddr();
+        return String.format("22:username:%s,password:%s,sessionId:%s,ip:%s", loginInfo.getUsername(), loginInfo.getPassword(), httpSession.getId(), remoteAddr);
     }
 
     @RequestMapping(value = "/unauthorized")

@@ -10,9 +10,24 @@
         <form action="http://localhost/login" method="post">
             <label>用户名：</label><input type="text" name="username" id="username">
             <label>密码：</label><input type="password" name="password" id="password">
+            <label>记住我：是<input type="radio" name="rememberMe" value="true"></label>
+            <label>否<input type="radio" name="rememberMe" value="false"></label>
             <input type="button" value="登录" onclick="clickBtn()">
         </form>
         <script type="application/javascript">
+
+            function getRadioValue(radioName){
+                var radios = document.getElementsByName(radioName);
+                var value;
+                for(var i=0;i<radios.length;i++){
+                    if(radios[i].checked){
+                        value = radios[i].value;
+                        break;
+                    }
+                }
+                return value;
+            }
+
             function clickBtn() {
 
                 axios.defaults.withCredentials=true;
@@ -24,6 +39,7 @@
                 var param = new Object();
                 param.username = document.getElementById("username").value;
                 param.password = document.getElementById("password").value;
+                param.rememberMe = getRadioValue("rememberMe");
                 instance.post('/login', param)
                     .then(function (response) {
                     //console.log(response.data);
@@ -32,7 +48,7 @@
                 });
             }
 
-            function clickBtn1() {
+            function clickBtn1(p) {
 
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
@@ -43,7 +59,7 @@
                 var param = new Object();
                 param.username = document.getElementById("username").value;
                 param.password = document.getElementById("password").value;
-                instance.post('/login1', param)
+                instance.post('/login'+ p, param)
                     .then(function (response) {
                         console.log(response.data);
                         console.log(response.status);
@@ -110,7 +126,8 @@
             }
         </script>
 
-        <input type="button" value="查数据" onclick="clickBtn1()">
+        <input type="button" value="查数据1" onclick="clickBtn1(1)">
+        <input type="button" value="查数据2" onclick="clickBtn1(2)">
         <input type="button" value="登出" onclick="clickBtn2()">
         <input type="button" value="验证码" onclick="clickBtn3()">
         <form action="http://localhost/login" method="post">

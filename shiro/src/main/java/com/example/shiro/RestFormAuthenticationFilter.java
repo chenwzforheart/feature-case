@@ -70,7 +70,8 @@ public class RestFormAuthenticationFilter extends FormAuthenticationFilter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return createToken(user.getUsername(), new String(user.getPassword()), request, response);
+        user.setHost(getHost(request));
+        return user;
     }
 
     @Override

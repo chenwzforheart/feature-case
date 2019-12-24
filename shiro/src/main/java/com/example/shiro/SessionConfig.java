@@ -3,14 +3,14 @@ package com.example.shiro;
 import com.example.shiro.cache.CacheJdbcRealm;
 import com.example.shiro.cache.PassService;
 import com.example.shiro.cache.RedisCacheM;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordMatcher;
-import org.apache.shiro.authc.credential.Sha256CredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class SessionConfig {
     }
 
     @Bean
-    public PasswordMatcher passwordMatcher(){
+    public PasswordMatcher passwordMatcher() {
         PasswordMatcher passwordMatcher = new PasswordMatcher();
         //passwordMatcher.setPasswordService(passService());
         return passwordMatcher;
@@ -75,6 +75,8 @@ public class SessionConfig {
 
         jdbcRealm.setCredentialsMatcher(passwordMatcher());
         securityManager.setRealm(jdbcRealm);
+
+        securityManager.setRememberMeManager(cookieRememberMeManager());
         return securityManager;
     }
 
@@ -87,13 +89,35 @@ public class SessionConfig {
         filter.setUnauthorizedUrl("/unauthorized");
         filter.setSuccessUrl("/success");
         HashMap<String, Filter> customFilter = new HashMap<>();
-        customFilter.put("restAuthc", new RestFormAuthenticationFilter());
+        RestFormAuthenticationFilter ff = new RestFormAuthenticationFilter();
+        ff.setRememberMeParam("rememberMe");
+
+        //user过滤器支持remember，authc必须通过登录
+        RestUserFilter rr = new RestUserFilter();
+        customFilter.put("restAuthc", ff);
+        customFilter.put("restUser", rr);
         filter.setFilters(customFilter);
 
         //设置过滤器链
         HashMap<String, String> filterDef = new HashMap<>();
+        filterDef.put("/login", "restAuthc");
+        filterDef.put("/code", "anon");
+        filterDef.put("/register", "anon");
+        filterDef.put("/login1", "restAuthc");
+        filterDef.put("/login2", "restUser");
         filterDef.put("/**", "restAuthc");
         filter.setFilterChainDefinitionMap(filterDef);
         return filter;
+    }
+
+    @Bean
+    public CookieRememberMeManager cookieRememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        SimpleCookie cookie = new SimpleCookie();
+        cookie.setName("rememberMe");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(7 * 24 * 3600);
+        cookieRememberMeManager.setCookie(cookie);
+        return cookieRememberMeManager;
     }
 }
