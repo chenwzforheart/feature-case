@@ -9,6 +9,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author csh9016
@@ -21,8 +22,9 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie cookie = WebUtils.getCookie(request, JwtHelper.HEADER);
         if (cookie != null && StringUtils.isNoneBlank(cookie.getValue())) {
-            String token = cookie.getValue();
-            log.info("放行");
+            Map<String, String> jwtParam = JwtHelper.verifyToken(cookie.getValue());
+            log.info("放行:{}",jwtParam.get("name"));
+            //因为JWT不可过期，需要通过redis缓存过期
             return true;
         }
         log.info("拦截");

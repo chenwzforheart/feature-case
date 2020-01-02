@@ -10,6 +10,7 @@
         <form action="http://localhost/login" method="post">
             <label>用户名：</label><input type="text" name="username" id="username">
             <label>密码：</label><input type="password" name="password" id="password">
+            <label>验证码：</label><input type="text" name="text" id="code">
             <label>记住我：是<input type="radio" name="rememberMe" value="true"></label>
             <label>否<input type="radio" name="rememberMe" value="false"></label>
             <input type="button" value="登录" onclick="clickBtn()">
@@ -39,6 +40,7 @@
                 var param = new Object();
                 param.username = document.getElementById("username").value;
                 param.password = document.getElementById("password").value;
+                param.code = document.getElementById("code").value;
                 param.rememberMe = getRadioValue("rememberMe");
                 instance.post('/login', param)
                     .then(function (response) {

@@ -25,17 +25,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class JwtHelper {
 
-    private static final String SECRET = "session_secret";
-
-    private static final String ISSUER = "me_user";
-
     public static final String HEADER = "Authorization";
+    private static final String SECRET = "session_secret";
+    private static final String ISSUER = "me_user";
+    private RedisTemplate redisTemplate;
 
     public static String genToken(Map<String, String> claims) {
         Algorithm algorithm = null;
         try {
             algorithm = Algorithm.HMAC256(SECRET);
-            JWTCreator.Builder builder = JWT.create().withIssuer(ISSUER).withExpiresAt(DateUtils.addDays(new Date(), 1));
+            JWTCreator.Builder builder = JWT.create().withIssuer(ISSUER).withExpiresAt(DateUtils.addMinutes(new Date(), 1));
             claims.forEach((k, v) -> builder.withClaim(k, v));
             return builder.sign(algorithm).toString();
         } catch (UnsupportedEncodingException e) {
@@ -56,18 +55,13 @@ public class JwtHelper {
         try {
             algorithm = Algorithm.HMAC256(SECRET);
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            throw new RuntimeException("jwt解码错误");
         }
         JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
-        DecodedJWT jwt = null;
-        try {
-            jwt = verifier.verify(token);
-        } catch (JWTVerificationException e) {
-            e.printStackTrace();
-        }
+        DecodedJWT jwt= verifier.verify(token);
         Map<String, Claim> map = jwt.getClaims();
         Map<String, String> resultMap = Maps.newHashMap();
-        map.forEach((k, v) -> resultMap.put(k, v.toString()));
+        map.forEach((k, v) -> resultMap.put(k, v.asString()));
         return resultMap;
     }
 
@@ -85,8 +79,6 @@ public class JwtHelper {
         Map<String, String> map = JwtHelper.verifyToken(token);
         redisTemplate.delete(map.get("email"));
     }
-
-    private RedisTemplate redisTemplate;
 
     private String renewToken(String token, String email) {
         redisTemplate.opsForValue().set(email, token);
