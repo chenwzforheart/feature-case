@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.common.collect.ImmutableMap;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,8 @@ public class JwtHelper {
 
     private static final String ISSUER = "me_user";
 
+    public static final String HEADER = "Authorization";
+
     public static String genToken(Map<String, String> claims) {
         Algorithm algorithm = null;
         try {
@@ -39,6 +43,14 @@ public class JwtHelper {
         }
     }
 
+    public static void main(String[] args) {
+        HashMap<String, String> map = Maps.newHashMap();
+        map.put("name", "nihao");
+        String result = genToken(map);
+        System.out.println(verifyToken(result));
+
+    }
+
     public static Map<String, String> verifyToken(String token) {
         Algorithm algorithm = null;
         try {
@@ -47,7 +59,12 @@ public class JwtHelper {
             e.printStackTrace();
         }
         JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
-        DecodedJWT jwt = verifier.verify(token);
+        DecodedJWT jwt = null;
+        try {
+            jwt = verifier.verify(token);
+        } catch (JWTVerificationException e) {
+            e.printStackTrace();
+        }
         Map<String, Claim> map = jwt.getClaims();
         Map<String, String> resultMap = Maps.newHashMap();
         map.forEach((k, v) -> resultMap.put(k, v.toString()));
