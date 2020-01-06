@@ -1,7 +1,9 @@
 package com.example.jwt;
 
 import com.google.common.collect.Maps;
+import com.google.common.primitives.Chars;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * @author csh9016
@@ -29,6 +32,56 @@ public class HomeController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    public static int passwordStrength(String pas) {
+        String base = pas.trim();
+        if (base.length() < 6) {
+            return 20;
+        }
+        if (serialOrSame3(base)) {
+            return 30;
+        }
+        if (Pattern.compile("\\d").matcher(base).find() && Pattern.compile("[a-zA-Z]").matcher(base).find()) {
+            if (Pattern.compile("[_?!@#$%^&*]").matcher(base).find()) {
+                if (base.length() >= 8) {
+                    return 80;
+                }
+                return 60;
+            }
+            return 40;
+        }
+        return 20;
+    }
+
+    private static boolean serialOrSame3(String base) {
+        for (int i = 0; i < base.toCharArray().length; i++) {
+            if (!loop(i, base)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean loop(int in, String base) {
+        char cc = base.charAt(in);
+        //1.递增序列
+        String next = Chars.join("", cc, (char) (cc + 1), (char) (cc + 2));
+        if (base.contains(next)) {
+            return false;
+        }
+        //2.递减序列
+        next = Chars.join("", cc, (char) (cc - 1), (char) (cc - 2));
+        if (base.contains(next)) {
+            return false;
+        }
+
+        //3.相同序列
+        next = Chars.join("", cc, cc, cc);
+        if (base.contains(next)) {
+            return false;
+        }
+        return true;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Object login(@RequestBody LoginInfo loginInfo, @CookieValue("code_vr") String codeVr, HttpServletResponse response) {
@@ -46,7 +99,7 @@ public class HomeController {
             cookie.setMaxAge(3600);
             response.addCookie(cookie);
             return "登录成功";
-        }else {
+        } else {
             return "登录失败";
         }
 
@@ -82,8 +135,8 @@ public class HomeController {
     @RequestMapping(value = "/code", method = {RequestMethod.POST, RequestMethod.GET})
     public String code(HttpServletResponse response) {
         String key = UUID.randomUUID().toString();
-        redisTemplate.boundValueOps("code:login:" + key).set("1234",30,TimeUnit.SECONDS);
-        response.addCookie(addCookie("code_vr",key));
+        redisTemplate.boundValueOps("code:login:" + key).set("1234", 30, TimeUnit.SECONDS);
+        response.addCookie(addCookie("code_vr", key));
         return "CODE:有效期30秒";
     }
 
@@ -95,7 +148,7 @@ public class HomeController {
     }
 
     private Cookie delCookie(String key) {
-        Cookie cookie = new Cookie(key,"");
+        Cookie cookie = new Cookie(key, "");
         cookie.setMaxAge(0);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
@@ -115,5 +168,4 @@ public class HomeController {
 
         return "REGISTER FAIL";
     }
-
 }
