@@ -17,6 +17,8 @@
         </form>
         <script type="application/javascript">
 
+            var apiUrl = 'http://localhost:9000/';
+
             function getRadioValue(radioName){
                 var radios = document.getElementsByName(radioName);
                 var value;
@@ -33,7 +35,7 @@
 
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
-                    baseURL:"http://localhost:8080/",
+                    baseURL:apiUrl,
                     timeout:1000,
                     header:{'X-Custom-Header':'foobar'}
                 });
@@ -54,7 +56,7 @@
 
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
-                    baseURL:"http://localhost:8080/",
+                    baseURL:apiUrl,
                     timeout:1000,
                     header:{'X-Custom-Header':'foobar'}
                 });
@@ -73,7 +75,7 @@
 
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
-                    baseURL:"http://localhost:8080/",
+                    baseURL:apiUrl,
                     timeout:1000,
                     header:{'X-Custom-Header':'foobar'}
                 });
@@ -92,7 +94,7 @@
 
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
-                    baseURL:"http://localhost:8080/",
+                    baseURL:apiUrl,
                     timeout:1000,
                     header:{'X-Custom-Header':'foobar'}
                 });
@@ -111,7 +113,7 @@
 
                 axios.defaults.withCredentials=true;
                 var instance = axios.create({
-                    baseURL:"http://localhost:8080/",
+                    baseURL:apiUrl,
                     timeout:1000,
                     header:{'X-Custom-Header':'foobar'}
                 });
