@@ -4,17 +4,30 @@
     <title>技术指南</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <link href="ske.css" type="text/css" rel="stylesheet">
+    <script src="jquery.min.js"></script>
+
 </head>
 <body>
     <div id="page">
         <div class="container">
             <div class="nav-header">
-                <h1 id="kra-logo"><a>算法网</a></h1>
+                <h1 id="kra-logo"><a>技术指南</a></h1>
                 <nav id="menu-warp">
                     <ul class="sf-menu">
                         <li>首页</li>
                         <li>精品教程</li>
-                        <li>数据结构</li>
+                        <li>
+                            <a href="#" id="data_s">数据结构</a>
+                            <ul class="li-hr" style="display: none">
+                                <li>时间复杂度</li>
+                                <li>空间复杂度</li>
+                                <li>树</li>
+                                <li>图</li>
+                                <li>队列</li>
+                                <li>散列表</li>
+                                <li>链表</li>
+                            </ul>
+                        </li>
                         <li>算法</li>
                         <li>架构设计</li>
                         <li>软件开发</li>
@@ -60,18 +73,24 @@
                             <li><span>美团JAVA</span><a href="https://tech.meituan.com/2019/08/08/large-scale-microservice-communication-framework.html" target="_blank">OCTO微服务</a></li>
                         </ul>
                         <h2>行业|解决方案|AI|SAAS</h2>
-                        <ul>
-                            <li><a href="https://www.faceplusplus.com.cn" target="_blank">旷视</a></li>
-                            <li><a href="https://www.sensetime.com/" target="_blank">商汤</a></li>
-                            <li><a href="https://www.yitutech.com/" target="_blank">依图</a></li>
-                            <li><a href="https://www.cloudwalk.cn/" target="_blank">云从</a></li>
-                            <li><a href="https://ai.baidu.com/" target="_blank">百度大脑</a></li>
-                            <li><a href="https://ai.qq.com/" target="_blank">腾讯AI</a></li>
-                            <li><a href="https://www.aligenie.com/" target="_blank">阿里AI</a></li>
-                            <li><a href="https://dev.mi.com/console/cloud/" target="_blank">小米</a></li>
-                            <li><a href="http://neuhub.jd.com/" target="_blank">京东</a></li>
-                            <li><a href="https://ai.meitu.com/" target="_blank">美图AI</a></li>
-                        </ul>
+                            <h3>AI</h3>
+                            <ul>
+                                <li><a href="https://www.faceplusplus.com.cn" target="_blank">旷视</a></li>
+                                <li><a href="https://www.sensetime.com/" target="_blank">商汤</a></li>
+                                <li><a href="https://www.yitutech.com/" target="_blank">依图</a></li>
+                                <li><a href="https://www.cloudwalk.cn/" target="_blank">云从</a></li>
+                                <li><a href="https://ai.baidu.com/" target="_blank">百度大脑</a></li>
+                                <li><a href="https://ai.qq.com/" target="_blank">腾讯AI</a></li>
+                                <li><a href="https://www.aligenie.com/" target="_blank">阿里AI</a></li>
+                                <li><a href="https://dev.mi.com/console/cloud/" target="_blank">小米</a></li>
+                                <li><a href="http://neuhub.jd.com/" target="_blank">京东</a></li>
+                                <li><a href="https://ai.meitu.com/" target="_blank">美图AI</a></li>
+                            </ul>
+                            <h3>电商</h3>
+                            <ul>
+                                <li><a href="https://www.youzan.com" target="_blank">有赞</a></li>
+                                <li><a href="https://www.weimob.com" target="_blank">微盟</a></li>
+                            </ul>
                         </div>
                     </article>
                 </section>
@@ -90,10 +109,17 @@
             <div id="footer">
                 <div class="container">
                     <div class="row">
-                Copyright 2020<a >算法网</a>. All Rights Reserved.
+                Copyright 2020<a >技术指南</a>. All Rights Reserved.
                     </div>
                 </div>
             </div>
         </footer>
     </div>
+    <script>
+        $("#data_s").hover(function (e) {
+            $(".li-hr").css("display","block")
+        },function (e) {
+            $(".li-hr").css("display","none");
+        })
+    </script>
 </body>
