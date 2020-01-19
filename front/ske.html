@@ -17,8 +17,8 @@
                         <li>首页</li>
                         <li>精品教程</li>
                         <li>
-                            <div  id="data_s"><a href="#">芯片</a></div>
-                            <ul class="li-hr" id="data_c" style="display: none">
+                            <div  class="data_s"><a href="#">芯片</a></div>
+                            <ul class="li-hr data_c" style="display: none">
                                 <li><a href="https://www.qualcomm.cn" target="_blank">高通</a></li>
                                 <li><a href="http://www.hisilicon.com/" target="_blank">海思</a></li>
                                 <li><a href="https://www.mediatek.cn/" target="_blank">联发科</a></li>
@@ -29,9 +29,12 @@
                             </ul>
                         </li>
                         <li>
-                            <div  id="data_x"><a href="#">存储</a></div>
-                            <ul class="li-hr" id="data_d" style="display: none">
+                            <div class="data_s"><a href="#">存储</a></div>
+                            <ul class="li-hr data_c" style="display: none">
                                 <li><a href="https://www.seagate.com/" target="_blank">希捷</a></li>
+                                <li><a href="https://shop.westerndigital.com/zh-cn/wd" target="_blank">西部数据</a></li>
+                                <li><a href="https://www.kingston.com/" target="_blank">金士顿</a></li>
+                                <li><a href="http://www.toshiba.com.cn/careerfield01/index01.html" target="_blank">东芝存储</a></li>
                             </ul>
                         </li>
                         <li>架构设计</li>
@@ -121,15 +124,18 @@
         </footer>
     </div>
     <script>
-        $("#data_s").hover(function (e) {
-            $(".li-hr").css("display","block")
+        //切换显示下拉列表
+        $(".data_s").hover(function (e) {
+            $(this).next().css("display","block")
         },function (e) {
-            $(".li-hr").css("display","none");
+            $(this).next().css("display","none");
         });
-        $("#data_c").hover(function (e) {
-            $(".li-hr").css("display","block")
+
+        //选中自己显示
+        $(".data_c").hover(function (e) {
+            $(this).css("display","block")
         },function (e) {
-            $(".li-hr").css("display","none");
+            $(this).css("display","none");
         })
     </script>
 </body>
