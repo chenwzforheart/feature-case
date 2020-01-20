@@ -97,13 +97,8 @@ body {
 }
 
 #wid-area {
-    float: left;
+    float: right;
     width: 33.33333333%;
-}
-
-.kra-hen {
-    padding: 30px 15px 18px;
-    background: #fff;
 }
 
 .li-hr {
@@ -124,4 +119,31 @@ body {
 
 .data_s {
     height: 60px;
+}
+
+.data_s a{
+    color: white;
+    text-decoration: none;
+}
+
+section {
+    position: relative;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+aside {
+    position: relative;
+    float: right;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+.kra-hen {
+    padding: 30px 15px 18px;
+    background: #fff;
+    margin: 0 0 15px;
 }
