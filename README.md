@@ -11,4 +11,7 @@
 
 ### Dubbo：一般是 Zookeeper + dubbo + Socket多种协议
 1.下载Zookeeper安装，http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.14/
-2.项目引入dubbo-2.5.3
+2.项目引入dubbo-2.5.3,运行Spring+dubbo项目，打包jar
+3.注册服务到zk
+
+4.分离本地配置到zk
