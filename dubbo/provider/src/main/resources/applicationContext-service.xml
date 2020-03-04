@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
@@ -11,12 +11,12 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<context:property-placeholder order="2" ignore-unresolvable="true" location="classpath:application.properties"/>
-	<context:property-placeholder order="1" ignore-unresolvable="true" location="classpath:application-sit.properties"/>
+	<context:property-placeholder order="1" ignore-unresolvable="true" location="classpath:application-#{systemProperties['env']}.properties"/>
 
-	
+
 	<!-- 配置包扫描器，扫描所有带@Service注解的类 -->
 	<context:component-scan base-package="com.dubbo.provider"/>
-	
+
 	<!-- 发布dubbo服务 -->
 	<!-- 提供方应用信息，用于计算依赖关系 -->
 	<dubbo:application name="taotao-order" />
