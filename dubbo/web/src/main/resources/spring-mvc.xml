@@ -12,20 +12,7 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
-	<context:property-placeholder order="2" ignore-unresolvable="true" location="classpath:application.properties"/>
-	<context:property-placeholder order="1" ignore-unresolvable="true" location="classpath:application-#{systemProperties['env']}.properties"/>
+	<mvc:annotation-driven></mvc:annotation-driven>
 
-
-	<!-- 配置包扫描器，扫描所有带@Service注解的类 -->
-	<context:component-scan base-package="com.dubbo.web"/>
-
-	<!-- 发布dubbo服务 -->
-	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="taotao-order" />
-	<!-- 注册中心的地址 -->
-	<dubbo:registry protocol="zookeeper" address="${zk.port}" />
-	<!-- 用dubbo协议在20880端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="20884" />
-	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:reference id="orderService" interface="com.dubbo.provider.OrderService"/>
+	<import resource="applicationContext-service.xml"/>
 </beans>
