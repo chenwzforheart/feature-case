@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>web</artifactId>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>web</name>
 	<description>Demo project for Spring Boot</description>
@@ -59,6 +59,20 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.3</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
