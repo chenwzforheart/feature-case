@@ -9,9 +9,7 @@
 
     <modules>
         <module>dal</module>
-        <module>service</module>
         <module>common</module>
-        <module>scala-demo</module>
     </modules>
     <properties>
         <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
